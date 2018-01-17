@@ -52,11 +52,13 @@ class App extends Component {
             return (<Todo id={index} key={index} todo={todo} onRemove={() => this.removeTodo(index)}/>)
           }) }
         </ul>
-        <input type="text" 
-          className="textInput"
-          placeholder="Enter todo"
-          ref={(input) => this.todoInput = input}
+        <div className="blockInput">
+          <input type="text" 
+            className="textInput"
+            placeholder="Enter todo"
+            ref={(input) => this.todoInput = input}
           />
+        </div>
         <div className="btn" onClick={this.addTodo.bind(this)}>+</div>
       </div>
     );
