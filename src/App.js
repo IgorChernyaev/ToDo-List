@@ -3,63 +3,50 @@ import './App.css';
 import Todo from './Todo'
 
 class App extends Component {
-  constructor() {
-    super()
 
-    this.state ={
-      todos: []
-    }
-
-    this.todoInput =""
+  state = {
+    todos: [],
+    todoInput: ""
   }
 
-  addTodo() {
-    let todoValue = this.todoInput.value
-    
-    let newTodos = this.state.todos
-    newTodos.push(todoValue)
+  setValue = ({ target }) => {
+    this.setState({ [target.name]: target.value });
+  }
 
-    this.setState({
-      todos: newTodos
-    })
-
-    // Reset value
-    this.todoInput.value =""
-
-    // Set focus to input
-    this.todoInput.focus()
+  addTodo = () => {
+    const { todos, todoInput } = this.state;
+    todos.push(todoInput);
+    this.setState({ todos, todoInput: "" });
   }
 
   removeTodo(id) {
-    let todos = this.state.todos.filter((todo, index) => {
-      return id !== index
-    })
-
-    this.setState({
-      todos: todos
-    })
+    const todos = this.state.todos.filter((todo, i) => id !== i )
+    this.setState({ todos });
   }
 
   render() {
+    const { todoInput, todos } = this.state;
     return (
       <div className="container">
         <div className="header">
           <h1>ToDoApp</h1>
-          <p>Todo's count: {this.state.todos.length}</p>
+          <p>Todo's count: {todos.length}</p>
         </div>
         <ul className="note">
-          { this.state.todos.map((todo, index) => {
-            return (<Todo id={index} key={index} todo={todo} onRemove={() => this.removeTodo(index)}/>)
+          { !!todos.length && todos.map((todo, i) => {
+            return (<Todo key={i} todo={todo} remove={() => this.removeTodo(i)}/>)
           }) }
         </ul>
         <div className="blockInput">
           <input type="text" 
             className="textInput"
             placeholder="Enter todo"
-            ref={(input) => this.todoInput = input}
+            value={todoInput}
+            onChange={this.setValue}
+            name="todoInput"
           />
         </div>
-        <div className="btn" onClick={this.addTodo.bind(this)}>+</div>
+        <div className="btn" onClick={this.addTodo}>+</div>
       </div>
     );
   }

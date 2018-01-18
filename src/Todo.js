@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-export default class App extends Component {
+export default class Todo extends Component {
   
   render() {
-    let {id, todo, onRemove} = this.props
-    return(
-      <li>{todo}<button className="remove" onClick={() => onRemove(id)}>x</button></li>
+    const { todo, remove } = this.props
+    return (
+      <li>{todo}<button className="remove" onClick={remove}>x</button></li>
     )
   }
 }
